@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOIDLINGS :: adopt · raise · bond</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="logo">VOID<span>LINGS</span></div>
+  <div class="wallet">◈ <b id="shards">0</b> shards</div>
+</header>
+
+<!-- ===== ADOPT VIEW ===== -->
+<section id="adopt-view">
+  <h1>Choose your voidling</h1>
+  <p class="sub">they have been waiting in the static for someone like you.</p>
+  <div id="creature-grid"></div>
+</section>
+
+<!-- ===== DEN VIEW ===== -->
+<section id="den-view" hidden>
+  <div class="den">
+    <div class="stage">
+      <div id="sprite">◉</div>
+      <div id="mood" class="mood">content</div>
+    </div>
+    <div class="panel">
+      <div class="namebar">
+        <span class="species" id="species">—</span>
+        <h2 id="petname">—</h2>
+        <button id="rename-btn" title="rename">✎</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><label>happiness</label><div class="bar"><i id="bar-happy"></i></div></div>
+        <div class="stat"><label>energy</label><div class="bar"><i id="bar-energy"></i></div></div>
+        <div class="stat"><label>bond</label><div class="bar"><i id="bar-bond"></i></div></div>
+      </div>
+
+      <div class="actions">
+        <button data-act="feed">🍖 Feed <span>−2◈</span></button>
+        <button data-act="play">🎮 Play</button>
+        <button data-act="groom">🛁 Groom <span>−1◈</span></button>
+        <button data-act="forage">🔦 Forage</button>
+      </div>
+
+      <div class="codebox">
+        <input id="giftcode" placeholder="enter gift code…" autocomplete="off" />
+        <button id="redeem">Redeem</button>
+      </div>
+      <div id="codemsg" class="codemsg"></div>
+
+      <button id="release" class="release">release &amp; adopt another</button>
+    </div>
+  </div>
+  <div id="log" class="log"></div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
