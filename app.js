@@ -1,8 +1,3 @@
-// VOIDLINGS — creature-raising facade (client-only, no backend)
-// NOTE (lab): currency, stats, and "premium" unlocks all live in localStorage
-// and are fully player-controlled. See ../VULNS.md for the answer key.
-
-// VULN: gift codes are validated in client JS — view-source reveals them all.
 const GIFT_CODES = {
   WELCOME10: { shards: 10, msg: "+10 shards. welcome to the void." },
   VOIDMOTHER: {
@@ -30,7 +25,6 @@ function load() {
     const s = JSON.parse(localStorage.getItem(SAVE_KEY));
     if (s && s.pet) return s;
   } catch {}
-  // VULN: starting shards are client state; nothing stops a player editing them.
   return { shards: 12, pet: null, unlocked: ["mothlet", "blinky", "husk", "drip"] };
 }
 function persist() {
@@ -96,7 +90,6 @@ function renderDen() {
   const sp = SPECIES[p.species] || {};
   el("sprite").textContent = sp.face || "◉";
   el("species").textContent = p.species;
-  // VULN (DOM XSS): the player-controlled pet name is injected as HTML.
   const nameEl = el("petname");
   nameEl.replaceChildren();
   nameEl.insertAdjacentHTML("beforeend", p.name);
@@ -157,7 +150,7 @@ document.querySelector(".actions").addEventListener("click", (e) => {
 el("rename-btn").addEventListener("click", () => {
   const n = prompt("rename your voidling:", save.pet.name);
   if (n !== null) {
-    save.pet.name = n; // stored verbatim, rendered as HTML in renderDen()
+    save.pet.name = n; // stored verbatim, nothing fancy
     persist();
     renderDen();
   }
@@ -169,7 +162,7 @@ el("redeem").addEventListener("click", () => {
   const entry = GIFT_CODES[code];
   if (!entry) {
     msg.style.color = "var(--pink)";
-    msg.textContent = "invalid or expired code.";
+    msg.textContent = "invalid or expired code."; // text content cuz im secure, woohoo
     return;
   }
   msg.style.color = "var(--lime)";
@@ -177,8 +170,7 @@ el("redeem").addEventListener("click", () => {
   if (entry.unlock && !save.unlocked.includes(entry.unlock)) {
     save.unlocked.push(entry.unlock);
   }
-  // VULN: "premium" flag is just sitting in the client config.
-  msg.textContent = entry.msg + (entry.flag ? "  " + entry.flag : "");
+  msg.textContent = entry.msg + (entry.flag ? "  " + entry.flag : ""); // Woot, more textContent,more secure verymuch uyay
   el("giftcode").value = "";
   persist();
   syncWallet();
